@@ -1,8 +1,24 @@
 from random import randint
 import turtle as tu
 
-number_of_turtles = 30
+number_of_turtles = 500
 steps_of_time_number = 10
+
+
+
+class Pool(turtle.Turtle):
+    def __init__(self, color, distance, shape):
+        super().__init__()
+        self.object = turtle.Turtle()
+        self.penup()
+        self.forward(distance)
+        self.color = color
+        self.shape = shape
+        self.pendown()
+        self.color = 'black'
+        self.shape = 'circle'
+
+
 
 
 def ready():
@@ -38,20 +54,26 @@ def movement():
         unit.seth(y)
     tu.update()
 
-
 ready()
 tu.tracer(0)
-pool = [tu.Turtle() for x in range(number_of_turtles)]
-for unit in pool:
-    unit.penup()
-    unit.speed(1)
-    unit.goto(randint(-50, 50), randint(-50,50))
+pool = [Pool for x in range(number_of_turtles)]
 
 
 
-for pool[1] in range(steps_of_time_number):
-    movement()
-for pool[2] in range(steps_of_time_number):
-    movement()
+for i in range(steps_of_time_number):
+    for unit in pool:
+        unit.forward(1)
+        x = 180 - unit.heading()
+        y = 360 - unit.heading()
+        if unit.xcor() >= 98.5:
+            unit.seth(x)
+        elif unit.xcor() <= -98.5:
+            unit.seth(x)
+        elif unit.ycor() <= -98.5:
+            unit.seth(y)
+        elif unit.ycor() >= 98.5:
+            unit.seth(y)
+
+        tu.update()
 
 tu.done()
